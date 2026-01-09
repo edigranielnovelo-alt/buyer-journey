@@ -3,162 +3,127 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>The Buyer's Journey</title>
+    <title>The Buyer's Journey | Growth Partner</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #00ffa3;
+            --danger: #ff4d4d;
             --glass: rgba(255, 255, 255, 0.03);
             --border: rgba(255, 255, 255, 0.1);
         }
         body {
-            margin: 0;
-            background: #050505;
-            color: white;
+            margin: 0; background: #050505; color: white;
             font-family: 'Plus Jakarta Sans', sans-serif;
-            overflow: hidden;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            overflow: hidden; height: 100vh;
+            display: flex; justify-content: center; align-items: center;
         }
-
-        /* Fondo Animado de Innovación */
         .bg-glow {
-            position: fixed;
-            width: 300px; height: 300px;
+            position: fixed; width: 300px; height: 300px;
             background: radial-gradient(circle, rgba(0, 255, 163, 0.15) 0%, transparent 70%);
             top: -100px; right: -50px; z-index: -1;
         }
-
-        .container { width: 90%; max-width: 380px; perspective: 1000px; }
-
-        /* Efecto Crystal Glassmorphism */
+        .container { width: 90%; max-width: 380px; }
         .glass-card {
-            background: var(--glass);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
-            border: 1px solid var(--border);
-            border-radius: 35px;
-            padding: 40px 30px;
-            text-align: center;
+            background: var(--glass); backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px); border: 1px solid var(--border);
+            border-radius: 35px; padding: 40px 30px; text-align: center;
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
             animation: slideUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
-
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(50px) rotateX(-10deg); }
-            to { opacity: 1; transform: translateY(0) rotateX(0deg); }
-        }
-
+        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
         .step-tag {
-            background: rgba(0, 255, 163, 0.1);
-            color: var(--primary);
-            padding: 6px 15px;
-            border-radius: 100px;
-            font-size: 0.7rem;
-            font-weight: 800;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            margin-bottom: 25px;
-            display: inline-block;
+            background: rgba(0, 255, 163, 0.1); color: var(--primary);
+            padding: 6px 15px; border-radius: 100px; font-size: 0.7rem;
+            font-weight: 800; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 25px; display: inline-block;
         }
-
         h1 { font-size: 1.8rem; font-weight: 800; line-height: 1.1; margin: 0 0 15px 0; }
-        p { color: rgba(255,255,255,0.6); line-height: 1.6; font-size: 1rem; }
-
+        p { color: rgba(255,255,255,0.6); line-height: 1.6; font-size: 0.95rem; }
         .input-box {
-            background: rgba(255,255,255,0.05);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 20px;
-            margin-top: 30px;
-            transition: 0.3s;
+            background: rgba(255,255,255,0.05); border: 1px solid var(--border);
+            border-radius: 20px; padding: 20px; margin-top: 25px;
         }
-        .input-box:focus-within { border-color: var(--primary); background: rgba(0, 255, 163, 0.05); }
-        
         input {
             background: transparent; border: none; color: white;
-            font-size: 1.5rem; width: 100%; text-align: center;
-            font-weight: 700; outline: none;
+            font-size: 1.8rem; width: 100%; text-align: center; font-weight: 700; outline: none;
         }
-
         .btn-glow {
-            background: white; color: black;
-            border: none; padding: 20px; width: 100%;
-            border-radius: 22px; font-weight: 800;
-            font-size: 0.9rem; margin-top: 25px;
-            cursor: pointer; transition: 0.4s;
-            text-transform: uppercase; letter-spacing: 1px;
+            background: white; color: black; border: none; padding: 20px; width: 100%;
+            border-radius: 22px; font-weight: 800; font-size: 0.9rem; margin-top: 25px;
+            cursor: pointer; transition: 0.3s; text-transform: uppercase;
         }
-        .btn-glow:active { transform: scale(0.95); opacity: 0.8; }
-
-        /* Pantalla de Carga/Análisis */
-        #analizando { display: none; }
+        .btn-glow:active { transform: scale(0.95); }
         .spinner {
-            width: 50px; height: 50px; border: 3px solid rgba(255,255,255,0.1);
+            width: 40px; height: 40px; border: 3px solid rgba(255,255,255,0.1);
             border-top-color: var(--primary); border-radius: 50%;
             animation: spin 1s infinite linear; margin: 0 auto 20px;
         }
         @keyframes spin { to { transform: rotate(360deg); } }
+        .data-row { display: flex; justify-content: space-between; margin: 10px 0; font-size: 0.85rem; }
     </style>
 </head>
 <body>
     <div class="bg-glow"></div>
-
-    <div class="container" id="fase-1">
-        <div class="glass-card">
-            <div class="step-tag">Etapa: Awareness</div>
+    <div class="container" id="app-content">
+        <div class="glass-card" id="view-1">
+            <div class="step-tag">Etapa 1: Awareness</div>
             <h1>Tu capital se está filtrando...</h1>
-            <p>Ingresa tu inversión mensual en leads para iniciar el escáner del <b>Buyer Journey</b>.</p>
-            
-            <div class="input-box">
-                <input type="number" id="inversion" placeholder="$0.00" autofocus>
-            </div>
-
-            <button class="btn-glow" onclick="irAAnalisis()">Escanear Fuga</button>
-        </div>
-    </div>
-
-    <div class="container" id="analizando">
-        <div class="glass-card">
-            <div class="spinner"></div>
-            <h2 id="status">Calculando ROI perdido...</h2>
-            <p>Analizando la eficiencia de tu embudo de ventas actual.</p>
+            <p>Ingresa tu inversión mensual en leads para detectar grietas en tu <b>Buyer Journey</b>.</p>
+            <div class="input-box"><input type="number" id="inversion" placeholder="$0.00"></div>
+            <button class="btn-glow" onclick="procesarAnalisis()">Escanear Fuga</button>
         </div>
     </div>
 
     <script>
         const tg = window.Telegram.WebApp;
         tg.expand();
-        tg.headerColor = '#050505';
 
-        function irAAnalisis() {
+        function procesarAnalisis() {
             const inv = document.getElementById('inversion').value;
-            if(!inv) return;
+            if(!inv || inv <= 0) return;
 
-            document.getElementById('fase-1').style.display = 'none';
-            document.getElementById('analizando').style.display = 'block';
+            // Pantalla de Carga Adictiva
+            document.getElementById('app-content').innerHTML = `
+                <div class="glass-card">
+                    <div class="spinner"></div>
+                    <h2 id="status">Iniciando Escáner...</h2>
+                    <p>Midiendo eficiencia del embudo...</p>
+                </div>
+            `;
 
-            const msgs = ["Analizando leads fríos...", "Midiendo tiempos de respuesta...", "Detectando grietas en el cierre...", "Diagnóstico listo."];
+            const pasos = ["Analizando leads fríos...", "Calculando ROI perdido...", "Comparando mercados...", "Diagnóstico Listo"];
             let i = 0;
-            
-            const interval = setInterval(() => {
-                if(i < msgs.length) {
-                    document.getElementById('status').innerText = msgs[i];
+            const t = setInterval(() => {
+                if(i < pasos.length) {
+                    document.getElementById('status').innerText = pasos[i];
                     i++;
                 } else {
-                    clearInterval(interval);
+                    clearInterval(t);
                     mostrarResultados(inv);
                 }
-            }, 1200);
+            }, 1000);
         }
 
         function mostrarResultados(inv) {
-            const perdida = (inv * 0.4).toLocaleString();
-            // Aquí inyectaremos la lámina de resultados con efecto cristal en el siguiente paso
-            alert("Tu fuga es de $" + perdida + ". ¿Estás listo para detenerla?");
+            const fuga = Math.round(inv * 0.42); // 42% de fuga promedio
+            const optimizado = Math.round(inv * 2.8); // Potencial de 2.8x
+
+            document.getElementById('app-content').innerHTML = `
+                <div class="glass-card" style="animation: slideUp 0.6s ease-out;">
+                    <div class="step-tag" style="background: rgba(255,77,77,0.1); color: var(--danger);">Resultado Crítico</div>
+                    <h1>Fuga Detectada</h1>
+                    <div style="background: rgba(255,255,255,0.03); padding: 20px; border-radius: 20px; margin: 20px 0; text-align: left;">
+                        <div class="data-row"><span>Inversión Mensual:</span> <span>$${Number(inv).toLocaleString()}</span></div>
+                        <div class="data-row" style="color: var(--danger); font-weight: 800;"><span>Pérdida por Fuga:</span> <span>-$${fuga.toLocaleString()}</span></div>
+                        <div style="height: 1px; background: var(--border); margin: 10px 0;"></div>
+                        <div class="data-row" style="color: var(--primary); font-weight: 800;"><span>Potencial Real:</span> <span>$${optimizado.toLocaleString()}</span></div>
+                    </div>
+                    <p style="font-size: 0.8rem;">Estás perdiendo el <b>42%</b> de tus oportunidades en la etapa de Consideración.</p>
+                    <button class="btn-glow" style="background: var(--primary);" onclick="tg.close()">Solucionar con IA</button>
+                    <button class="btn-glow" style="background: transparent; color: white; border: 1px solid var(--border); margin-top: 10px;" onclick="location.reload()">Re-Escanear</button>
+                </div>
+            `;
         }
     </script>
 </body>
