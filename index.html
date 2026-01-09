@@ -3,121 +3,134 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Growth Partner - Buyer Journey</title>
+    <title>The Buyer's Journey</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         :root {
-            --tg-theme-bg-color: #ffffff;
-            --tg-theme-text-color: #222222;
-            --tg-theme-button-color: #3390ec;
-            --tg-theme-button-text-color: #ffffff;
-            --tg-theme-hint-color: #999999;
+            --accent: #00ffa3;
+            --bg: #0d1117;
+            --card: #161b22;
         }
-
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--tg-theme-bg-color);
-            color: var(--tg-theme-text-color);
             margin: 0;
-            padding: 20px;
+            background: var(--bg);
+            color: white;
+            font-family: 'Segoe UI', Roboto, sans-serif;
             display: flex;
-            flex-direction: column;
-            align-items: center;
             justify-content: center;
-            min-height: 90vh;
-            text-align: center;
-            overflow: hidden;
+            align-items: center;
+            height: 100vh;
         }
-
-        .slide {
-            display: none; /* Ocultas por defecto */
-            width: 100%;
+        .app-container {
+            width: 90%;
             max-width: 400px;
+            text-align: center;
             animation: fadeIn 0.5s ease;
         }
-
-        .slide.active { display: block; }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+        .card {
+            background: var(--card);
+            padding: 30px;
+            border-radius: 28px;
+            border: 1px solid rgba(255,255,255,0.05);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
         }
-
-        h1 { font-size: 24px; margin-bottom: 20px; font-weight: 800; }
-        p { font-size: 16px; color: var(--tg-theme-hint-color); line-height: 1.5; }
-
-        .main-button {
-            background-color: var(--tg-theme-button-color);
-            color: var(--tg-theme-button-text-color);
-            border: none;
-            padding: 15px 30px;
-            border-radius: 12px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            width: 100%;
-            margin-top: 30px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        .step-indicator {
+            color: var(--accent);
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            font-weight: 800;
+            margin-bottom: 10px;
+            display: block;
         }
-
-        /* Estilos para el Escáner (Lámina 2) */
-        .input-group { margin-top: 20px; text-align: left; }
+        h1 { font-size: 1.5rem; margin-bottom: 20px; line-height: 1.2; }
+        
+        /* Inputs estilizados para que no parezcan robots */
+        .input-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        label { color: #8b949e; font-size: 0.8rem; margin-left: 10px; }
         input {
             width: 100%;
-            padding: 12px;
-            border-radius: 8px;
-            border: 1px solid var(--tg-theme-hint-color);
-            background: transparent;
-            color: var(--tg-theme-text-color);
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 15px;
+            border-radius: 15px;
+            color: white;
+            font-size: 1.1rem;
             margin-top: 5px;
             box-sizing: border-box;
+            outline: none;
+            transition: border 0.3s;
         }
+        input:focus { border-color: var(--accent); }
+
+        .btn-next {
+            background: var(--accent);
+            color: black;
+            border: none;
+            padding: 18px;
+            width: 100%;
+            border-radius: 18px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(0, 255, 163, 0.2);
+        }
+
+        /* Pantalla de resultados elegante (en lugar de un alert) */
+        #result-screen { display: none; }
+        .loss-amount { font-size: 2.5rem; color: #ff4d4d; font-weight: 800; margin: 10px 0; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
-    <div id="slide1" class="slide active">
-        <h1>Tu nómina crece,<br>pero tus leads se enfrían...</h1>
-        <p>Estás pagando por una infraestructura que no convierte. Cada lead ignorado es capital quemado.</p>
-        <button class="main-button" onclick="nextSlide(2)">DETENER LA FUGA DE VENTAS</button>
+    <div class="app-container" id="step-1">
+        <div class="card">
+            <span class="step-indicator">FASE 2: EL ESCÁNER</span>
+            <h1>Calcula el impacto de la fuga</h1>
+            
+            <div class="input-group">
+                <label>Inversión mensual en Leads ($)</label>
+                <input type="number" id="inversion" placeholder="Ej. 2500">
+            </div>
+
+            <div class="input-group">
+                <label>% de Leads que NO se contactan</label>
+                <input type="number" id="fuga" placeholder="Ej. 40">
+            </div>
+
+            <button class="btn-next" onclick="calcular()">CALCULAR PÉRDIDA</button>
+        </div>
     </div>
 
-    <div id="slide2" class="slide">
-        <h1>Escáner de Fuga</h1>
-        <p>Calcula cuánto dinero estás perdiendo hoy mismo.</p>
-        <div class="input-group">
-            <label>Inversión mensual en Leads ($)</label>
-            <input type="number" id="investment" placeholder="Ej. 5000">
+    <div class="app-container" id="result-screen">
+        <div class="card">
+            <span class="step-indicator" style="color: #ff4d4d;">DIAGNÓSTICO CRÍTICO</span>
+            <p>Estás perdiendo aproximadamente:</p>
+            <div class="loss-amount" id="monto-final">$0</div>
+            <p style="font-size: 0.9rem;">Este capital se quema mes a mes por falta de automatización.</p>
+            <button class="btn-next" style="background: white;" onclick="location.reload()">REINTENTAR</button>
         </div>
-        <div class="input-group">
-            <label>% de Leads que NO se contactan</label>
-            <input type="number" id="leak" placeholder="Ej. 40">
-        </div>
-        <button class="main-button" onclick="calculateLeak()">CALCULAR PÉRDIDA</button>
     </div>
 
     <script>
-        // Inicializar Telegram WebApp
         const tg = window.Telegram.WebApp;
-        tg.expand(); // Abre la app a pantalla completa
+        tg.expand();
 
-        function nextSlide(num) {
-            // Ocultar todas las láminas
-            document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
-            // Mostrar la seleccionada
-            document.getElementById('slide' + num).classList.add('active');
-            
-            // Notificar a Edi (Tracking Silencioso - Base)
-            console.log("Usuario avanzó a la lámina: " + num);
-        }
+        function calcular() {
+            const inv = document.getElementById('inversion').value;
+            const fug = document.getElementById('fuga').value;
 
-        function calculateLeak() {
-            const inv = document.getElementById('investment').value;
-            const leak = document.getElementById('leak').value;
-            if(inv && leak) {
-                const loss = (inv * (leak / 100)).toFixed(2);
-                alert("Estás perdiendo $" + loss + " al mes. Vamos a solucionarlo.");
-                // Aquí mañana conectaremos la Lámina 3
+            if(inv && fug) {
+                const perdida = (inv * (fug / 100)).toLocaleString();
+                document.getElementById('monto-final').innerText = '$' + perdida;
+                
+                // Transición suave entre pantallas
+                document.getElementById('step-1').style.display = 'none';
+                document.getElementById('result-screen').style.display = 'block';
             }
         }
     </script>
