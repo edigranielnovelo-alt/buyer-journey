@@ -3,164 +3,198 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Growth Partner | Experience</title>
+    <title>Growth Partner | The Journey</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #00ffa3;
-            --danger: #ff4d4d;
-            --glass: rgba(255, 255, 255, 0.03);
-            --border: rgba(255, 255, 255, 0.1);
+            --primary: #00ffa3; --danger: #ff4d4d; --glass: rgba(255, 255, 255, 0.03);
+            --border: rgba(255, 255, 255, 0.1); --accent: #ffffff;
         }
         body {
-            margin: 0; background: #050505; color: white;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            overflow: hidden; height: 100vh;
-            display: flex; justify-content: center; align-items: center;
+            margin: 0; background: #000; color: white; font-family: 'Plus Jakarta Sans', sans-serif;
+            overflow: hidden; height: 100vh; display: flex; justify-content: center; align-items: center;
         }
         .bg-glow {
-            position: fixed; width: 500px; height: 500px;
-            background: radial-gradient(circle, rgba(0, 255, 163, 0.07) 0%, transparent 70%);
-            top: -200px; right: -100px; z-index: -1;
+            position: fixed; width: 600px; height: 600px;
+            background: radial-gradient(circle, rgba(0, 255, 163, 0.08) 0%, transparent 70%);
+            top: -200px; right: -150px; z-index: -1;
         }
-        .container { width: 90%; max-width: 400px; position: relative; }
-
-        /* Transiciones de Pantalla Líquidas */
-        .glass-card {
-            background: var(--glass); backdrop-filter: blur(35px);
-            -webkit-backdrop-filter: blur(35px); border: 1px solid var(--border);
-            border-radius: 45px; padding: 45px 30px; text-align: center;
-            box-shadow: 0 40px 80px rgba(0,0,0,0.6);
-            transition: all 0.7s cubic-bezier(0.19, 1, 0.22, 1);
-            opacity: 1; transform: scale(1) translateY(0);
-        }
-        .hidden { opacity: 0; transform: scale(0.9) translateY(40px); pointer-events: none; position: absolute; }
-
-        .step-tag {
-            background: rgba(0, 255, 163, 0.1); color: var(--primary);
-            padding: 8px 18px; border-radius: 100px; font-size: 0.75rem;
-            font-weight: 800; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 30px; display: inline-block;
-        }
-        h1 { font-size: 2.2rem; font-weight: 800; line-height: 1; margin: 0 0 15px 0; letter-spacing: -1.5px; }
-        p { color: rgba(255,255,255,0.7); line-height: 1.5; font-size: 1.1rem; margin-bottom: 35px; }
+        .container { width: 90%; max-width: 420px; position: relative; height: 85vh; display: flex; align-items: center; }
         
-        .input-group { margin-bottom: 25px; text-align: left; }
-        label { font-size: 0.8rem; color: #8b949e; margin-left: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
-        .input-box {
-            background: rgba(255,255,255,0.05); border: 1px solid var(--border);
-            border-radius: 22px; padding: 20px; margin-top: 10px; transition: 0.4s;
+        .progress-bar {
+            position: absolute; top: -30px; left: 0; width: 100%; height: 4px;
+            background: rgba(255,255,255,0.1); border-radius: 10px; overflow: hidden;
         }
-        .input-box:focus-within { border-color: var(--primary); background: rgba(0, 255, 163, 0.05); }
-        input {
-            background: transparent; border: none; color: white;
-            font-size: 1.5rem; width: 100%; font-weight: 700; outline: none;
-        }
+        #progress-fill { width: 0%; height: 100%; background: var(--primary); transition: 0.5s cubic-bezier(0.19, 1, 0.22, 1); }
 
+        .glass-card {
+            background: var(--glass); backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px);
+            border: 1px solid var(--border); border-radius: 45px; padding: 40px 30px;
+            text-align: center; box-shadow: 0 40px 100px rgba(0,0,0,0.8);
+            position: absolute; width: 100%; box-sizing: border-box;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1); opacity: 0; transform: scale(0.9) translateY(40px); pointer-events: none;
+        }
+        .active { opacity: 1; transform: scale(1) translateY(0); pointer-events: all; z-index: 10; }
+
+        h1 { font-size: 2.1rem; font-weight: 800; line-height: 1.1; margin-bottom: 20px; letter-spacing: -1.5px; }
+        p { color: rgba(255,255,255,0.6); line-height: 1.6; font-size: 1.05rem; margin-bottom: 30px; }
+        
+        .input-group { margin-bottom: 20px; text-align: left; }
+        label { font-size: 0.75rem; color: #8b949e; margin-left: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+        .input-box {
+            background: rgba(255,255,255,0.06); border: 1px solid var(--border);
+            border-radius: 20px; padding: 18px; margin-top: 8px; display: flex; align-items: center;
+        }
+        input, select { background: transparent; border: none; color: white; font-size: 1.2rem; width: 100%; font-weight: 600; outline: none; }
+        
         .btn-glow {
-            background: #ffffff; color: #000; border: none; padding: 24px; width: 100%;
-            border-radius: 24px; font-weight: 800; font-size: 1.1rem; margin-top: 10px;
-            cursor: pointer; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            text-transform: uppercase; letter-spacing: 1px;
+            background: var(--accent); color: #000; border: none; padding: 22px; width: 100%;
+            border-radius: 22px; font-weight: 800; font-size: 1.1rem; cursor: pointer;
+            transition: 0.4s; text-transform: uppercase; margin-top: 10px;
         }
         .btn-glow:active { transform: scale(0.94); }
 
-        .spinner {
-            width: 70px; height: 70px; border: 5px solid rgba(255,255,255,0.05);
-            border-top-color: var(--primary); border-radius: 50%;
-            animation: spin 1s infinite cubic-bezier(0.68, -0.55, 0.265, 1.55); margin: 0 auto 35px;
-        }
-        @keyframes spin { to { transform: rotate(360deg); } }
+        .feature-tag { background: rgba(0, 255, 163, 0.1); color: var(--primary); padding: 5px 12px; border-radius: 50px; font-size: 0.7rem; font-weight: 800; margin-bottom: 15px; display: inline-block; }
+        .data-card { background: rgba(255,255,255,0.03); padding: 25px; border-radius: 30px; margin: 20px 0; text-align: left; }
+        .data-row { display: flex; justify-content: space-between; margin: 12px 0; font-size: 0.95rem; }
         
-        .data-card { background: rgba(255,255,255,0.03); padding: 30px; border-radius: 35px; margin: 30px 0; text-align: left; }
-        .data-row { display: flex; justify-content: space-between; margin: 15px 0; font-size: 1.1rem; }
+        .spinner { width: 60px; height: 60px; border: 4px solid rgba(255,255,255,0.05); border-top-color: var(--primary); border-radius: 50%; animation: spin 1s infinite linear; margin: 0 auto 30px; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* Estilo para Stripe/SPEI */
+        .payment-box { display: flex; gap: 10px; margin-top: 20px; }
+        .p-method { flex: 1; background: rgba(255,255,255,0.05); padding: 15px; border-radius: 15px; font-size: 0.8rem; font-weight: 800; border: 1px solid var(--border); }
     </style>
 </head>
 <body>
     <div class="bg-glow"></div>
-    
     <div class="container">
+        <div class="progress-bar"><div id="progress-fill"></div></div>
+
+        <div id="step0" class="glass-card active">
+            <h1>El futuro es hoy.</h1>
+            <p>Estás pagando por un departamento de ventas del siglo XX. Esta sonda detectará dónde tu capital se evapora mientras tus leads se enfrían.</p>
+            <button class="btn-glow" onclick="next(1)">Iniciar Auditoría</button>
+        </div>
+
         <div id="step1" class="glass-card">
-            <div class="step-tag">Fase 1: Auditoría</div>
-            <h1>Detén la Fuga.</h1>
-            <p>Descubre el capital que pierdes mes a mes por procesos manuales.</p>
+            <div class="feature-tag">Identidad</div>
+            <h1>Personalización.</h1>
+            <p>¿A qué industria pertenece tu negocio?</p>
             <div class="input-group">
-                <label>Inversión Mensual Total</label>
-                <div class="input-box"><input type="number" id="capital" placeholder="$0.00" autofocus></div>
+                <label>Industria / Giro</label>
+                <div class="input-box"><input type="text" id="avatar" placeholder="Ej: Agencia, Taller, Clínica..."></div>
             </div>
-            <button class="btn-glow" onclick="irAAnalizar()">Analizar Fuga</button>
+            <button class="btn-glow" onclick="saveAvatar()">Siguiente</button>
         </div>
 
-        <div id="step2" class="glass-card hidden">
+        <div id="step2" class="glass-card">
+            <div class="feature-tag">Adquisición</div>
+            <h1>Inversión.</h1>
+            <p id="p-step2">Analizando flujo para tu negocio...</p>
+            <div class="input-group">
+                <label>Mensual en Ads (Meta/Google)</label>
+                <div class="input-box"><span>$</span><input type="number" id="ads" placeholder="0.00"></div>
+            </div>
+            <button class="btn-glow" onclick="next(3)">Siguiente</button>
+        </div>
+
+        <div id="step3" class="glass-card">
+            <div class="feature-tag">Operativa</div>
+            <h1>Factor Humano.</h1>
+            <p>Sueldos del equipo de ventas y administración comercial.</p>
+            <div class="input-group">
+                <label>Nómina Mensual Bruta</label>
+                <div class="input-box"><span>$</span><input type="number" id="nomina" placeholder="0.00"></div>
+            </div>
+            <button class="btn-glow" onclick="calculate()">Procesar Datos</button>
+        </div>
+
+        <div id="step4" class="glass-card">
             <div class="spinner"></div>
-            <h1 id="status-text" style="font-size: 1.6rem;">Escaneando...</h1>
-            <p>Calculando impacto de carga social y leads fríos.</p>
+            <h1 id="loading-text">Escaneando...</h1>
+            <p>Midiendo carga social e ineficiencia de respuesta.</p>
         </div>
 
-        <div id="step3" class="glass-card hidden">
-            <div class="step-tag" style="background: rgba(255,77,77,0.1); color: var(--danger);">Diagnóstico</div>
-            <h1>Capital Perdido</h1>
+        <div id="step5" class="glass-card">
+            <div class="feature-tag" style="background:rgba(255,77,77,0.1); color:var(--danger);">Veredicto Final</div>
+            <h1>Fuga Detectada.</h1>
             <div class="data-card">
-                <div class="data-row"><span>Fuga Mensual:</span> <span id="perdida-valor" style="font-weight:800; color:var(--danger)">$0</span></div>
-                <div style="height: 1px; background: var(--border); margin: 15px 0;"></div>
-                <div class="data-row" style="font-size: 0.9rem; opacity: 0.7;"><span>Costo real de nómina + IMSS desperdiciado.</span></div>
+                <div class="data-row"><span>Carga Social (IMSS):</span> <span id="res-imss">$0</span></div>
+                <div class="data-row"><span>Leads Perdidos:</span> <span id="res-leads" class="danger-text">-$0</span></div>
+                <div style="height:1px; background:var(--border); margin:10px 0;"></div>
+                <div class="data-row" style="font-weight:800; font-size:1.1rem;"><span>COSTO INACCIÓN:</span> <span class="danger-text" id="res-total">$0</span></div>
             </div>
-            <p>Tu dinero se quema en una estructura que no escala.</p>
-            <button class="btn-glow" style="background: var(--primary);" onclick="irADecision()">Solución Growth</button>
+            <button class="btn-glow" style="background:var(--primary)" onclick="next(6)">Solución Growth</button>
         </div>
 
-        <div id="step4" class="glass-card hidden">
-            <div class="step-tag">Fase Final</div>
-            <h1>Vende más.</h1>
-            <p>Crece tus ventas con <b>Growth Partner</b>. Automatización de cierre 24/7 sin sueldos.</p>
-            
-            <div style="text-align: left; margin: 35px 0; font-size: 1.1rem;">
-                <div style="margin-bottom: 15px;">🚀 Respuesta Inmediata</div>
-                <div style="margin-bottom: 15px;">🛡️ Cero Impuestos de Nómina</div>
+        <div id="step6" class="glass-card">
+            <div class="feature-tag">Capabilities</div>
+            <h1>Recaudo 24/7.</h1>
+            <p>Tu futura app cobrará por ti en segundos, sin humanos de por medio.</p>
+            <div class="payment-box">
+                <div class="p-method">STRIPE<br><span style="font-size:0.6rem; opacity:0.6;">Tarjetas</span></div>
+                <div class="p-method">SPEI<br><span style="font-size:0.6rem; opacity:0.6;">Transf. Directa</span></div>
             </div>
+            <button class="btn-glow" onclick="next(7)">El Futuro</button>
+        </div>
 
-            <button class="btn-glow" onclick="contactarTelegram()">Hablar con Edi</button>
-            <button class="btn-glow" style="background: transparent; color: white; border: 1px solid var(--border); margin-top: 15px; font-size: 0.8rem;" onclick="location.reload()">Nuevo Análisis</button>
+        <div id="step7" class="glass-card">
+            <div class="feature-tag">Next Level</div>
+            <h1>IA Sin Límites.</h1>
+            <p style="font-size: 0.95rem;">Has vivido una IA básica. Imagina una diseñada para tu ADN: una que cierra ventas y escala tu negocio sin límites humanos.</p>
+            <button class="btn-glow" style="background:var(--primary)" onclick="contactar()">Hablar con Edi</button>
         </div>
     </div>
 
     <script>
         const tg = window.Telegram.WebApp;
         tg.expand();
-        tg.headerColor = '#050505';
+        tg.headerColor = '#000000';
 
-        function irAAnalizar() {
-            const cap = document.getElementById('capital').value;
-            if(!cap || cap <= 0) return;
+        let currentStep = 0;
+        let bizName = "";
 
-            document.getElementById('step1').classList.add('hidden');
-            document.getElementById('step2').classList.remove('hidden');
+        function next(s) {
+            document.getElementById(`step${currentStep}`).classList.remove('active');
+            currentStep = s;
+            document.getElementById(`step${currentStep}`).classList.add('active');
+            document.getElementById('progress-fill').style.width = `${(currentStep / 7) * 100}%`;
+        }
 
-            const msgs = ["Analizando grietas...", "Calculando IMSS/ISN...", "Midiendo ROI...", "Diagnóstico Listo"];
+        function saveAvatar() {
+            bizName = document.getElementById('avatar').value || "tu negocio";
+            document.getElementById('p-step2').innerText = `Analizando flujo de prospección para: ${bizName}`;
+            next(2);
+        }
+
+        function calculate() {
+            next(4);
+            const ads = parseFloat(document.getElementById('ads').value) || 0;
+            const nomina = parseFloat(document.getElementById('nomina').value) || 0;
+            
+            const frases = ["Detectando fugas...", "Calculando Carga Social...", "Optimizando ROI...", "Listo"];
             let i = 0;
-            const interval = setInterval(() => {
-                if(i < msgs.length) {
-                    document.getElementById('status-text').innerText = msgs[i];
+            const timer = setInterval(() => {
+                if(i < frases.length) {
+                    document.getElementById('loading-text').innerText = frases[i];
                     i++;
                 } else {
-                    clearInterval(interval);
-                    const perdida = (cap * 0.45).toLocaleString();
-                    document.getElementById('perdida-valor').innerText = '$' + perdida;
-                    document.getElementById('step2').classList.add('hidden');
-                    document.getElementById('step3').classList.remove('hidden');
+                    clearInterval(timer);
+                    const imss = nomina * 0.35;
+                    const fuga = (ads * 0.40) + (nomina * 0.15);
+                    document.getElementById('res-imss').innerText = `$${imss.toLocaleString()}`;
+                    document.getElementById('res-leads').innerText = `-$${(ads * 0.40).toLocaleString()}`;
+                    document.getElementById('res-total').innerText = `$${fuga.toLocaleString()}`;
+                    next(5);
                 }
             }, 1000);
         }
 
-        function irADecision() {
-            document.getElementById('step3').classList.add('hidden');
-            document.getElementById('step4').classList.remove('hidden');
-        }
-
-        function contactarTelegram() {
-            // Esto abre tu chat directamente. Telegram ya sabe quién eres.
-            // Puedes cambiar 'EdiGrowthPartner_bot' por tu usuario personal si prefieres.
-            window.open('https://t.me/EdiGrowthPartner_bot', '_blank');
+        function contactar() {
+            const msg = `Hola Edi, acabo de terminar mi auditoría para mi negocio de ${bizName}. Quiero automatizar mi departamento de ventas.`;
+            window.open(`https://t.me/TuUsuarioTelegram?text=${encodeURIComponent(msg)}`, '_blank');
         }
     </script>
 </body>
